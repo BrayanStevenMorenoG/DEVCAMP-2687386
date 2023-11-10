@@ -37,7 +37,7 @@ const CoursesSchema = new mongoose.Schema({
             true,
             "Semana requerida"
         ],
-        minlength:[
+        min:[
             9,
             "Debe tener menos de 10 semanas"
         ]

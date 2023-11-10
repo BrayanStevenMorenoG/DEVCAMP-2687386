@@ -24,7 +24,7 @@ const ReviewsSchema = new mongoose.Schema({
         ],
         maxLength:[
             50,
-            "El comentario debe terner menos de 21 caracteres"
+            "El comentario debe terner 20 caracteres o menos"
         ]
     },
     rating: {
@@ -33,11 +33,11 @@ const ReviewsSchema = new mongoose.Schema({
             true,
             "Clasificación requerida"
         ],
-        maxLength:[
+        max:[
             10,
             "Calificación de 1 a 10"
         ],
-        minLength:[
+        min:[
             1,
             "Calificación de 1 a 10"
         ]

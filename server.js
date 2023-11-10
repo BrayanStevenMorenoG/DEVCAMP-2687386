@@ -5,7 +5,7 @@ const conectarDB = require('./config/db')
 
 // dependencias de rutas
 const bootcampRoutes = require('./routes/bootcampRoutes')
-// const coursesRoutes = require('./routes/coursesRoutes')
+const coursesRoutes = require('./routes/coursesRoutes')
 // const reviewcRoutes = require('./routes/reviewsRoutes')
 // const userRoutes = require('./routes/usersRoutes')
 
@@ -28,8 +28,9 @@ app.use(express.json())
 app.use('/api/v1/devcamp/bootcamps', 
         bootcampRoutes)
 
-// app.use('/api/v1/devcamp/courses', 
-//         bootcampRoutes)
+app.use('/api/v1/devcamp/courses', 
+        coursesRoutes);
+
 
 // app.use('/api/v1/devcamp/reviews', 
 //         bootcampRoutes)

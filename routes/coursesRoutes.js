@@ -1,4 +1,5 @@
 const express = require('express')
+const CoursesModel = require('../models/coursesModel')
 
 //definir el ruteador
 
@@ -7,42 +8,71 @@ const router = express.Router()
 // COURSES
 
 // traer todos los courses
-router.get('/courses', (req, res) => {
+router.get('/', async (req, res) => {
+
+    // Utilizar el model para seleccionar todos los courses de la base de datos
+
+    const courses = await CoursesModel.find()
+
     res.json({
         success: true,
-        msg: "Aqui se mostraran todos los courses"
+        data: courses
     })
 })
 
 // traer un course por id
-router.get('/courses/:id', (req, res) =>{
+router.get('/:id', async (req, res) =>{
+
+    // Extraer el id del course del paramero de la url 
+
+    courseId = req.params.id
+
+    const course = await CoursesModel.findById(courseId)
+
     res.json({
         success: true, 
-        msg: `Aqui se mostrara el course cuyo id es: ${req.params.id}`
+        data: course
     })
 })
 
 // Crear un course
-router.post('/courses', (req, res) => {
+router.post('/', async (req, res) => {
+
+    // El numero course vendra a traves del body de la request
+
+    const newCourse = await CoursesModel.create(req.body)
+
     res.json({
         success: true,
-        msg: "Aqui se creara un course"
+        data: newCourse
     })
 })
 
 // actualizar un course por id
-router.put('/courses/:id', (req, res) =>{
+router.put('/:id', async (req, res) =>{
+
+    // El número coure vendra del body de la request
+
+    const courseId = req.params.id
+
+    const upCourse = await CoursesModel.findByIdAndUpdate(courseId, req.body, {new: true})
+
     res.json({
         success: true, 
-        msg: `Aqui se editara el course con id ${req.params.id}`
+        data: upCourse
     })
 })
 
 // Eliminar course por id
-router.delete('/courses/:id', (req, res) =>{
+router.delete('/:id', async (req, res) =>{
+
+    const courseId = req.params.id
+
+    const delCourse = await CoursesModel.findByIdAndDelete(courseId)
+
     res.json({
         success: true, 
-        msg: `Aqui se eliminara el course con id ${req.params.id}`
+        data: delCourse
     })
 })
 

@@ -1,4 +1,6 @@
 const express = require('express')
+const ReviewModel = require('../models/reviewsModel')
+const reviewsModel = require('../models/reviewsModel')
 
 //definir el ruteador
 
@@ -8,46 +10,75 @@ const router = express.Router()
 
 // traer todos los reviews
 
-router.get('/reviews', (req, res) => {
+router.get('/', async (req, res) => {
+
+    // Utilizar el model para seleccionar todos los reviews de la base de datos
+
+    const reviews = await ReviewModel.find()
+
     res.json({
         success: true,
-        msg: "Aqui se mostraran todos los users"
+        data: reviews
     })
 })
 
 // traer un review por id
 
-router.get('/reviews/:id', (req, res) =>{
+router.get('/:id', async (req, res) =>{
+
+    //Extraer el id del review del parametro de la url
+
+    reviewId = req.params.id
+    
+    const review = await ReviewModel.findById(reviewId)
+
     res.json({
         success: true, 
-        msg: `Aqui se mostrara el review cuyo id es: ${req.params.id}`
+        data: review
     })
 })
 
 // Crear un review
 
-router.post('/reviews', (req, res) => {
+router.post('/', async (req, res) => {
+
+    // El numero review vendra del body de la request 
+
+    const newReview = await ReviewModel.create(req.body)
+
     res.json({
         success: true,
-        msg: "Aqui se creara un review"
+        data: newReview
     })
 })
 
 // actualizar un review por id
 
-router.put('/reviews/:id', (req, res) =>{
+router.put('/:id', async (req, res) =>{
+
+    // El numero review vendra a traves del body de la request 
+
+    const reviewId = req.params.id
+
+    const upReview = await ReviewModel.findByIdAndUpdate(reviewId, req.body, {new: true})
+
     res.json({
         success: true, 
-        msg: `Aqui se editara review por id ${req.params.id}`
+        data: upReview
     })
 })
 
 // Eliminar review por id
 
-router.delete('/reviews/:id', (req, res) =>{
+router.delete('/:id', async (req, res) =>{
+
+    const reviewId = req.params.id
+
+    const delReview = await reviewsModel.findByIdAndDelete(reviewId)
+
     res.json({
         success: true, 
-        msg: `Aqui se eliminara review por id ${req.params.id}`
+        data: delReview
     })
 })
 

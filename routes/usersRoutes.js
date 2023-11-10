@@ -1,4 +1,6 @@
 const express = require('express')
+const UsersModel = require('../models/usersModel')
+const UsersModel = require('../models/usersModel')
 
 //definir el ruteador
 
@@ -7,42 +9,63 @@ const router = express.Router()
 // USERS
 
 // traer todos los users
-router.get('/users', (req, res) => {
+router.get('/', async (req, res) => {
+
+    const users = await UsersModel.find()
+
     res.json({
         success: true,
-        msg: "Aqui se mostraran todos los users"
+        data: users
     })
 })
 
 // traer un user por id
-router.get('/users/:id', (req, res) =>{
+router.get('/:id', async (req, res) =>{
+
+    userId = req.params.id
+    
+    const user = await UsersModel.findById(userId)
+
     res.json({
         success: true, 
-        msg: `Aqui se mostrara el user cuyo id es: ${req.params.id}`
+        data: user
     })
 })
 
 // Crear un user
-router.post('/users', (req, res) => {
+router.post('/', async (req, res) => {
+
+    const newUser = await UsersModel.create(req.body)
+
     res.json({
         success: true,
-        msg: "Aqui se creara un user"
+        data: newUser
     })
 })
 
 // actualizar un user por id
-router.put('/users/:id', (req, res) =>{
+router.put('/:id', async (req, res) =>{
+
+    const userId = req.params.id
+
+    const upUser = await UsersModel.findByIdAndUpdate(userId, req.body, {new: true})
+
     res.json({
         success: true, 
-        msg: `Aqui se editara user por id ${req.params.id}`
+        data: upUser
     })
 })
 
 // Eliminar user por id
-router.delete('/users/:id', (req, res) =>{
+router.delete('/:id', async (req, res) =>{
+
+    const userId = req.params.id
+
+    const delUser = await UsersModel.findByIdAndDelete(userId)
+
     res.json({
         success: true, 
-        msg: `Aqui se eliminara user por id ${req.params.id}`
+        data: delUser
     })
 })
 

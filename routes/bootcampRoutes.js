@@ -1,6 +1,5 @@
 const express = require('express')
 const BootcampModel = require('../models/bootcampModel')
-const bootcampModel = require('../models/bootcampModel')
 
 //definir el ruteador
 
@@ -68,7 +67,7 @@ router.delete('/:id', async (req, res) =>{
 
     const bootcampId = req.params.id
 
-    const delBootcamp = await bootcampModel.findByIdAndDelete(bootcampId)
+    const delBootcamp = await BootcampModel.findByIdAndDelete(bootcampId)
      
     res.json({
         success: true, 

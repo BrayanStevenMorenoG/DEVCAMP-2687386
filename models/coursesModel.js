@@ -6,46 +6,54 @@ const CoursesSchema = new mongoose.Schema({
 
     title: {
         type: String, 
-        unique: true,
+        unique: [true, "El titulo ya existe"],
         required: [
             true,
             "Titulo requerido"
+        ],
+        maxlength:[
+            30,
+            "El titulo no puede pasar los 30 caracteres"
+        ],
+        minlength:[
+            10,
+            "El titulo debe tener mas de 10 caracteres"
         ]
     },
     description: {
         type: String, 
-        unique: true,
         required: [
             true,
             "Descripción requerida"
+        ],
+        minlength:[
+            10,
+            "La descripción debe tener mas de 10 caracteres"
         ]
     },
     weeks: {
-        type: Number, 
-        unique: true,
+        type: Number,
         required: [
             true,
             "Semana requerida"
+        ],
+        minlength:[
+            9,
+            "Debe tener menos de 10 semanas"
         ]
     },
-    min:[
-        1,
-        "Debe tener como minimo una semana"
-    ],
-    tuition: {
+    enroll_cost: {
         type: Number,
-        unique: true,
         required: [
             true,
-            "Matricula requerida"
+            "Requerido, digite un valor"
         ]                 
     },
-    minimunSkill: {
+    minimum_skill: {
         type: String,
-        enum: ['beginner', 'intermediate', 'advanced'],
+        enum: ['Beginner', 'Intermediate', 'Advanced','Expert'],
         required: [true, "Habilidad requerida"]
-    },
-    createdAt: Date
+    }
 
 })
 

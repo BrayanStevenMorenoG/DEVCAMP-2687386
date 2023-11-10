@@ -1,6 +1,5 @@
 const express = require('express')
 const UsersModel = require('../models/usersModel')
-const UsersModel = require('../models/usersModel')
 
 //definir el ruteador
 

@@ -6,8 +6,8 @@ const conectarDB = require('./config/db')
 // dependencias de rutas
 const bootcampRoutes = require('./routes/bootcampRoutes')
 const coursesRoutes = require('./routes/coursesRoutes')
-// const reviewcRoutes = require('./routes/reviewsRoutes')
-// const userRoutes = require('./routes/usersRoutes')
+const reviewcRoutes = require('./routes/reviewsRoutes')
+const userRoutes = require('./routes/usersRoutes')
 
 // Vincular en archivo .env
 dotenv.config(
@@ -32,11 +32,11 @@ app.use('/api/v1/devcamp/courses',
         coursesRoutes);
 
 
-// app.use('/api/v1/devcamp/reviews', 
-//         bootcampRoutes)
+app.use('/api/v1/devcamp/reviews', 
+        reviewcRoutes)
 
-// app.use('/api/v1/devcamp/users', 
-//         bootcampRoutes)
+app.use('/api/v1/devcamp/users', 
+        userRoutes)
 
 app.listen(process.env.PUERTO , () =>{
     console.log(`Servidor en ejecución ${process.env.PUERTO}`.bgYellow.yellow);

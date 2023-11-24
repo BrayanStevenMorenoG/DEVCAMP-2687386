@@ -22,10 +22,6 @@ const CoursesSchema = new mongoose.Schema({
     },
     description: {
         type: String, 
-        required: [
-            true,
-            "Descripción requerida"
-        ],
         minlength:[
             10,
             "La descripción debe tener mas de 10 caracteres"

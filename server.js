@@ -35,7 +35,7 @@ app.use('/api/v1/devcamp/courses',
 app.use('/api/v1/devcamp/reviews', 
         reviewcRoutes)
 
-app.use('/api/v1/devcamp/users', 
+app.use('/api/v1/devcamp/auth', 
         userRoutes)
 
 app.listen(process.env.PUERTO , () =>{

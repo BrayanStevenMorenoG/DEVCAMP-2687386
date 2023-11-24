@@ -2,6 +2,10 @@ const express = require('express')
 const BootcampModel = require('../models/bootcampModel')
 const { default: mongoose } = require('mongoose')
 
+//dependencias al middleware
+
+const {protect, authorize} = require('../middleware/auth')
+
 //definir el ruteador
 
 const router = express.Router()
@@ -104,7 +108,7 @@ router.get('/:id', async (req, res) =>{
 })
 
 // Crear un bootcamp
-router.post('/', async (req, res) => {
+router.post('/', protect, async (req, res) => {
 
     //El numero bootcamp vendra a traves del body de la request
 

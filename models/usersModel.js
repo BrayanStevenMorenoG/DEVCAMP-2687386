@@ -25,10 +25,10 @@ const UsersSchema = new mongoose.Schema({
             "Correo electrónico inválido"
         ]
     },
-    rol: {
+    role: {
         type: String, 
         enum: ["admin","user","publisher"],
-        default: "user",
+        
         required: [
             true,
             "Rol requerido"
@@ -65,7 +65,20 @@ UsersSchema.pre('save', async function(){
 //metodo para comparar password del usuario vs password del body
 
 UsersSchema.methods.compararPassword = async function(password){
-    return bcryptjs.compare(this.password, password)
+    return bcryptjs.compare(password, this.password)
+}
+
+//metodo vinculado al modelo para crear el jwt 
+UsersSchema.methods.generarJWT = function(){
+    return jwt.sign({
+        id: this._id,
+        name: this.name
+                    },
+        process.env.JWT_SECRET_KEY,
+        {
+            expiresIn: process.env.JWT_EXPIRE
+        }            
+                    )
 }
 
 module.exports = mongoose.model("Users",

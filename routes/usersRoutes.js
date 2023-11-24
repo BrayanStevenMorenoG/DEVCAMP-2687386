@@ -13,13 +13,18 @@ const router = express.Router()
 router.post('/register', async (req,res) =>{
 
     try {
-        
+    
         const user = await UsersModel.create(req.body)
+
+        //crear token 
+            
+        const token = user.generarJWT()
 
         res.status(201)
             .json({
                 success: true,
-                data: user
+                data: user,
+                token_jwt: token
             })
 
     } catch (error) {
@@ -49,7 +54,7 @@ router.post('/login', async (req,res) =>{
     } else {
         //2. Si llega email, pero el usuario no existe
 
-        const user = await UsersModel.find({email}).select("+password")
+        const user = await UsersModel.findOne({email}).select("+password")
 
         // console.log(user);
 
@@ -68,11 +73,20 @@ router.post('/login', async (req,res) =>{
 
             if(isMatch){
                 
+                const token = user.generarJWT()
+
+                const options = {
+                    expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000) ,
+                    httpOnly: true
+                }
+
                 return res.status(200)
+                          .cookie('token', token, options)
                           .json({
                             success: true,
                             msg: "usuario logueado correctamente",
-                            data: user
+                            data: user,
+                            token_jwt: token
                           })
             } else {
 
